@@ -1,0 +1,30 @@
+{
+    "version": 2,
+    "functions": {
+        "api/index.php": { "runtime": "vercel-php@0.6.0" }
+    },
+    "routes": [
+        { "src": "/build/(.*)", "dest": "/public/build/$1" },
+        { "src": "/(.*)", "dest": "/api/index.php" }
+    ],
+    "builds": [{ "src": "api/index.php", "use": "vercel-php@0.6.0" }],
+    "buildCommand": "composer install && php artisan config:cache && php artisan route:cache && npm install && npm run build",
+    "env": {
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "APP_KEY": "L7GLytdMvJJzGRHDVQzXTf/MjlhIa2mo3wRgr4g0VaE=",
+        "APP_URL": "https://lsc.vercel.app",
+
+        "DB_CONNECTION": "mysql",
+        "DB_HOST": "0zqc9n.h.filess.io",
+        "DB_PORT": "61002",
+        "DB_DATABASE": "lsc_factcheck",
+        "DB_USERNAME": "lsc_factcheck",
+        "DB_PASSWORD": "dc64e839c012aa9b30a70a081bcd331b4ae25712",
+
+        "SESSION_DRIVER": "cookie",
+        "CACHE_DRIVER": "array",
+        "QUEUE_CONNECTION": "sync",
+        "FILESYSTEM_DISK": "local"
+    }
+}
