@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('flashcards', function (Blueprint $table) {
+            $table->char('flashcard_id', 36)->primary();
+            $table->char('lecture_id', 36);
+            $table->text('question');
+            $table->text('answer');
+            $table->enum('difficulty', ['easy', 'medium', 'hard'])->default('medium');
+            $table->integer('review_count')->default(0);
+            $table->integer('correct_count')->default(0);
+            $table->timestamp('next_review_at')->nullable();
+            $table->timestamps();
+
+            $table->foreign('lecture_id')->references('lecture_id')->on('lectures')->onDelete('cascade');
+            $table->index(['lecture_id', 'next_review_at']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('flashcards');
+    }
+};
