@@ -1,19 +1,20 @@
 {
     "version": 2,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.6.0" }
+        "api/index.php": {
+            "runtime": "vercel-php@0.6.0"
+        }
     },
     "routes": [
         { "src": "/build/(.*)", "dest": "/public/build/$1" },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
-    "builds": [{ "src": "api/index.php", "use": "vercel-php@0.6.0" }],
-    "buildCommand": "composer install && php artisan config:cache && php artisan route:cache && npm install && npm run build",
+    "buildCommand": "composer install && npm install && npm run build && php artisan config:cache && php artisan route:cache",
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "false",
-        "APP_KEY": "L7GLytdMvJJzGRHDVQzXTf/MjlhIa2mo3wRgr4g0VaE=",
-        "APP_URL": "https://lsc.vercel.app",
+        "APP_KEY": "base64:L7GLytdMvJJzGRHDVQzXTf/MjlhIa2mo3wRgr4g0VaE=",
+        "APP_URL": "https://nama-project.vercel.app",
 
         "DB_CONNECTION": "mysql",
         "DB_HOST": "0zqc9n.h.filess.io",
