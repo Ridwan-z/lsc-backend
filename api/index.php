@@ -4,15 +4,16 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-// Clear dan buat folder bootstrap/cache
+// PENTING: Buat folder bootstrap/cache dengan benar
 $bootstrapCache = __DIR__ . '/../bootstrap/cache';
-if (is_dir($bootstrapCache)) {
-    // Hapus semua file cache di bootstrap/cache
-    array_map('unlink', glob("$bootstrapCache/*"));
-}
+
+// Jangan hapus, langsung cek dan buat
 if (!is_dir($bootstrapCache)) {
-    mkdir($bootstrapCache, 0755, true);
+    @mkdir($bootstrapCache, 0777, true);
 }
+
+// Set permissions (untuk memastikan writable)
+@chmod($bootstrapCache, 0777);
 
 // Buat folder storage di /tmp
 $tmpDirs = [
@@ -24,7 +25,7 @@ $tmpDirs = [
 
 foreach ($tmpDirs as $dir) {
     if (!is_dir($dir)) {
-        @mkdir($dir, 0755, true);
+        @mkdir($dir, 0777, true);
     }
 }
 
@@ -36,22 +37,11 @@ if (file_exists($maintenance = __DIR__ . '/../storage/framework/maintenance.php'
 // Composer autoload
 require __DIR__ . '/../vendor/autoload.php';
 
-// Bootstrap Laravel - SKIP CACHE
+// Bootstrap Laravel
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
 // Override storage path
 $app->useStoragePath('/tmp/storage');
-
-// PENTING: Disable config cache
-if (file_exists($configCache = __DIR__ . '/../bootstrap/cache/config.php')) {
-    unlink($configCache);
-}
-if (file_exists($packagesCache = __DIR__ . '/../bootstrap/cache/packages.php')) {
-    unlink($packagesCache);
-}
-if (file_exists($servicesCache = __DIR__ . '/../bootstrap/cache/services.php')) {
-    unlink($servicesCache);
-}
 
 // Make kernel
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
