@@ -4,10 +4,9 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-// Create writable directories in /tmp for Vercel
+// Create all writable directories in /tmp for Vercel
 $tmpDirs = [
-    '/tmp/views',
-    '/tmp/cache',
+    '/tmp/bootstrap/cache',
     '/tmp/storage/framework/cache/data',
     '/tmp/storage/framework/sessions',
     '/tmp/storage/framework/views',
@@ -20,8 +19,11 @@ foreach ($tmpDirs as $dir) {
     }
 }
 
-// Set writable paths for Laravel
+// Set environment variables for writable paths
+putenv('APP_BOOTSTRAP_CACHE=/tmp/bootstrap/cache');
 putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
+
+$_ENV['APP_BOOTSTRAP_CACHE'] = '/tmp/bootstrap/cache';
 $_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
 
 // Maintenance mode check
@@ -35,8 +37,9 @@ require __DIR__ . '/../vendor/autoload.php';
 // Bootstrap Laravel application
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
-// Override storage paths for Vercel
+// Override paths for Vercel read-only filesystem
 $app->useStoragePath('/tmp/storage');
+$app->useCachePath('/tmp/bootstrap/cache');
 
 // Make kernel
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
