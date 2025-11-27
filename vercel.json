@@ -1,6 +1,5 @@
 {
     "version": 2,
-    "framework": null,
     "functions": {
         "api/index.php": {
             "runtime": "vercel-php@0.7.1",
@@ -22,10 +21,28 @@
         }
     ],
     "env": {
+        "APP_NAME": "Laravel",
         "APP_ENV": "production",
+        "APP_KEY": "base64:X93qzOHIUTlKRktDMOr2ugnXKpqzAYETY5wn1MO6f1g=",
         "APP_DEBUG": "false",
+        "APP_URL": "https://lsc-backend.vercel.app",
+
         "LOG_CHANNEL": "stderr",
+        "LOG_LEVEL": "error",
+
+        "DB_CONNECTION": "mysql",
+        "DB_HOST": "0zqc9n.h.filess.io",
+        "DB_PORT": "61002",
+        "DB_DATABASE": "lsc_factcheck",
+        "DB_USERNAME": "lsc_factcheck",
+        "DB_PASSWORD": "dc64e839c012aa9b30a70a081bcd331b4ae25712",
+
+        "CACHE_STORE": "array",
         "SESSION_DRIVER": "array",
-        "CACHE_STORE": "array"
+        "SESSION_LIFETIME": "120",
+        "QUEUE_CONNECTION": "sync",
+
+        "BROADCAST_DRIVER": "log",
+        "FILESYSTEM_DISK": "local"
     }
 }
