@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/lectures/{id}', [LectureController::class, 'destroy']);
     Route::post('/lectures/{id}/toggle-favorite', [LectureController::class, 'toggleFavorite']);
     Route::post('/lectures/{id}/play', [LectureController::class, 'play']);
-    Route::post('lectures/upload-audio', [LectureController::class, 'uploadAudio']);
+    Route::post('/lectures/upload-audio', [LectureController::class, 'uploadAudio']);
     // Bookmarks
     Route::get('/lectures/{lectureId}/bookmarks', [BookmarkController::class, 'index']);
     Route::post('/lectures/{lectureId}/bookmarks', [BookmarkController::class, 'store']);
