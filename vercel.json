@@ -9,8 +9,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "/api/index.php",
-            "check": false
+            "dest": "/api/index.php?path=$1"
         }
     ],
     "env": {

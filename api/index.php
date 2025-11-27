@@ -1,5 +1,7 @@
 <?php
 
+$_SERVER['REQUEST_URI'] = '/' . trim($_GET['path'] ?? '', '/');
+
 use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
