@@ -19,13 +19,6 @@ foreach ($tmpDirs as $dir) {
     }
 }
 
-// Set environment variables for writable paths
-putenv('APP_BOOTSTRAP_CACHE=/tmp/bootstrap/cache');
-putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
-
-$_ENV['APP_BOOTSTRAP_CACHE'] = '/tmp/bootstrap/cache';
-$_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
-
 // Maintenance mode check
 if (file_exists($maintenance = __DIR__ . '/../storage/framework/maintenance.php')) {
     require $maintenance;
@@ -37,9 +30,11 @@ require __DIR__ . '/../vendor/autoload.php';
 // Bootstrap Laravel application
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
-// Override paths for Vercel read-only filesystem
+// Override storage path for Vercel read-only filesystem
 $app->useStoragePath('/tmp/storage');
-$app->useCachePath('/tmp/bootstrap/cache');
+
+// Bind bootstrap path manually
+$app->instance('path.bootstrap', '/tmp/bootstrap');
 
 // Make kernel
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
